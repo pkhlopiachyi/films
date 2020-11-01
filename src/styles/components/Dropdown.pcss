@@ -1,0 +1,41 @@
+.cr-dropdown {
+  outline: none;
+  position: relative;
+  margin-bottom: 20px;
+
+  .dropdown {
+    width: 100%;
+
+    &-toggle {
+      background-color: #ffffff !important;
+      color: #000000 !important;
+      border-color: #a6c6c1;
+      border-radius: 4px;
+      text-align: left;
+      width: 100%;
+      box-shadow: none !important;
+
+      &:focus,
+      &:hover,
+      &:active {
+        box-shadow: none;
+        border-color: #ff5500;
+      }
+    }
+
+    &-menu {
+      padding: 0;
+      width: 100%;
+    }
+
+    &-item {
+      padding-bottom: 10px;
+      padding-top: 10px;
+
+      &:hover,
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
