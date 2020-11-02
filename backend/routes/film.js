@@ -3,6 +3,7 @@ const fs = require('fs');
 const Film = require('../models/Film');
 const { createFilmValidation } = require('../validation');
 const formidable = require('formidable');
+const { duplicationCheck } = require('../actorsDuplicatingCheck');
 
 router.get('/', async (req, res) => {
     try {
@@ -15,26 +16,31 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-    const { error } = createFilmValidation(req.body);
-
-    if (error) {
-        return res.status(400).json(error.details[0].message);
-    }
-
-    const film = new Film({
-        title: req.body.title,
-        release_year: req.body.release_year,
-        format: req.body.format,
-        stars: req.body.stars,
-        image_link: req.body.image_link,
-    });
 
     try {
+        const { error } = createFilmValidation(req.body);
+
+        if (error) {
+            const errorResponse = {
+                error: error.details[0].message,
+            };
+
+            return res.status(400).send(errorResponse);
+        }
+
+        const film = new Film({
+            title: req.body.title,
+            release_year: req.body.release_year,
+            format: req.body.format,
+            stars: duplicationCheck(req.body.stars),
+            image_link: req.body.image_link,
+        });
+
         await Film.collection.insertOne(film);
 
         res.status(200).send({ data: film });
     } catch (error) {
-        res.status(400).send(err);
+        res.status(400).send(error);
     }
 });
 
@@ -43,7 +49,10 @@ router.delete('/delete', async (req, res) => {
         let film = await Film.findById({ _id: req.query._id });
 
         if (!film) {
-            return res.status(400).send("Film wasn't found");
+            const errorResponse = {
+                error: "Film wasn't found",
+            };
+            return res.status(400).send(errorResponse);
         }
 
         await Film.collection.deleteOne({ _id: film._id });
@@ -58,7 +67,19 @@ router.delete('/delete', async (req, res) => {
 router.get('/alphabet', async (req, res) => {
     try {
         const films = await Film.find();
-        const sortedFilms = films.sort((first, second) => first.title > second.title);
+        const sortedFilms = films;
+
+        for (let i = 1; i < sortedFilms.length; i++) {
+            let current = sortedFilms[i];
+            let j = i - 1;
+
+            while ((j > -1) && (current.title < sortedFilms[j].title)) {
+                sortedFilms[j + 1] = sortedFilms[j];
+                j--;
+            }
+
+            sortedFilms[j + 1] = current;
+        }
 
         res.status(200).send({ data: sortedFilms })
     } catch (error) {
@@ -93,7 +114,15 @@ router.post('/upload', async (req, res) => {
                 return res.status(404).send('File not found');
             }
 
+            if (files.films_file.name.split('.')[files.films_file.name.split('.').length - 1] !== 'txt') {
+                return res.status(400).send('Wrong file format');
+            }
+
             const data =  fs.readFileSync(files.films_file.path, 'utf8');
+
+            if (!data.length) {
+                return res.status(400).send("File is empty");
+            }
 
             let arr = data.split('\n');
             if (arr[arr.length - 1]) {
@@ -105,12 +134,14 @@ router.post('/upload', async (req, res) => {
                     title: arr[i].includes(': ') ? arr[i].split(': ')[1] : arr[i].split(':')[1],
                     release_year: arr[i + 1].includes(': ') ? arr[i + 1].split(': ')[1] : arr[i + 1].split(':')[1],
                     format: arr[i + 2].includes(': ') ? arr[i + 2].split(': ')[1] : arr[i + 2].split(':')[1],
-                    stars: arr[i + 3].includes(': ') ? arr[i + 3].split(': ')[1] : arr[i + 3].split(':')[1],
+                    stars: duplicationCheck(arr[i + 3].includes(': ') ? arr[i + 3].split(': ')[1] : arr[i + 3].split(':')[1]),
                 })
             }
 
             if (result.length) {
-                await Film.collection.insertMany(result);
+                for (item of result) {
+                    await Film.collection.insertOne(item);
+                }
 
                 res.status(200).send('File uploaded')
             } else {

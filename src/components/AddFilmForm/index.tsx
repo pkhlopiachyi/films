@@ -65,7 +65,7 @@ export class AddEmainModal extends React.Component<Props> {
                             handleChangeInput={value => handleChangeInput(value, 'image_link')}
                             type="text"
                             label="Image link (optional)"
-                            placeholder="Image link"
+                            placeholder="Image link (optional)"
                         />
                     </div>
                     <div className="add-new-film__form__footer">
@@ -82,6 +82,7 @@ export class AddEmainModal extends React.Component<Props> {
                             onClick={onSubmit}
                             variant="success"
                             type="button"
+                            disabled={this.handleCheckDisable()}
                         >
                             Submit
                         </Button>
@@ -90,6 +91,12 @@ export class AddEmainModal extends React.Component<Props> {
             </div>
         );
     }
+
+    private handleCheckDisable = () => {
+        const { title, release_year, format, stars } = this.props;
+
+        return !title || !release_year || !format || !stars;
+    };
 
     private onChangeDropdown = (elem: string) => {
         this.props.handleChangeInput(elem, 'format');

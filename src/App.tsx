@@ -1,10 +1,14 @@
 import * as React from 'react';
+import { Alerts } from './containers';
 import { FilmScreen } from './screens';
 
 class AppLayout extends React.Component {
     public render() {
         return (
-            <FilmScreen />
+            <React.Fragment>
+                <FilmScreen />
+                <Alerts />
+            </React.Fragment>
         );
     }
 }

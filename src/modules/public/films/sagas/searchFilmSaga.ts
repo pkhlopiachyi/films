@@ -1,6 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 import { API, RequestOptions } from '../../../../api';
 import { buildQueryString } from '../../../../helpers/buildQueryString';
+import { alertPush } from '../../../public/alert';
 import { searchFilmData, searchFilmError, SearchFilmsFetch } from '../actions';
 
 const filmConfig: RequestOptions = {
@@ -14,6 +15,7 @@ export function* searchFilmSaga(action: SearchFilmsFetch) {
 
         yield put(searchFilmData(data));
     } catch (error) {
+        yield put(alertPush({ message: error.message, type: 'error' }));
         yield put(searchFilmError(error));
     }
 }

@@ -7,6 +7,8 @@ import {
 import { compose } from 'redux';
 import { DeleteFilmModal, FilmCarousel, FilmDetailsModal, SearchField, UploadFile } from '../../components';
 import { AddEmainModal } from '../../components/AddFilmForm';
+import { CustomPagination } from '../../components/Pagination';
+import { pageLength } from '../../constants';
 import {
     addFilm,
     CommonError,
@@ -53,6 +55,8 @@ interface State {
     image_link: string;
     searchValue: string;
     file: File[];
+    currentPageIndex: number;
+    paginatedList: FilmInterface[];
 }
 
 class FilmScreenComponent extends React.Component<Props, State> {
@@ -71,6 +75,8 @@ class FilmScreenComponent extends React.Component<Props, State> {
             image_link: '',
             searchValue: '',
             file: [],
+            currentPageIndex: 0,
+            paginatedList: [],
         };
     }
     public componentDidMount() {
@@ -84,6 +90,28 @@ class FilmScreenComponent extends React.Component<Props, State> {
 
         if (!prevProps.addFilmSuccess && this.props.addFilmSuccess) {
             this.setState({ showAddFilmModal: false });
+
+            this.setState({
+                title: '',
+                release_year: '',
+                format: '',
+                stars: '',
+                image_link: '',
+            });
+        }
+
+        if (!prevProps.films.length && this.props.films.length) {
+            this.setState({
+                currentPageIndex: 0,
+                paginatedList: this.props.films.slice(0, pageLength),
+            });
+        }
+
+        if (JSON.stringify(prevProps.films) !== JSON.stringify(this.props.films)) {
+            this.setState({
+                currentPageIndex: 0,
+                paginatedList: this.props.films.slice(0, pageLength),
+            });
         }
     }
 
@@ -99,7 +127,11 @@ class FilmScreenComponent extends React.Component<Props, State> {
             stars,
             image_link,
             searchValue,
+            currentPageIndex,
+            paginatedList,
         } = this.state;
+
+        const pageCount = Math.ceil(this.props.films.length / pageLength);
 
         return (
             <div className="film-screen">
@@ -115,9 +147,17 @@ class FilmScreenComponent extends React.Component<Props, State> {
                         <UploadFile handleUploadFile={this.handleUploadFile} upload={this.uploadFile}/>
                     </div>
                     <FilmCarousel
-                        list={this.props.films}
+                        list={paginatedList}
                         onSelectFilm={this.onClickFilm}
                         handleDeleteClick={this.showDeleteFilmModal}
+                    />
+                    <CustomPagination
+                        total={this.props.films.length}
+                        firstElemIndex={1}
+                        lastElemIndex={3}
+                        currentPageIndex={currentPageIndex}
+                        pageCount={pageCount}
+                        handleChangePage={this.handleChangePage}
                     />
                 </div>
                 {showDetailsModal && <FilmDetailsModal onClose={this.onCloseFilmDetails} film={selectedFilm} />}
@@ -141,6 +181,13 @@ class FilmScreenComponent extends React.Component<Props, State> {
             </div>
         );
     }
+
+    private handleChangePage = (pageIndex: number) => {
+        this.setState({
+            currentPageIndex: pageIndex,
+            paginatedList: this.props.films.slice(pageIndex * pageLength, pageIndex * pageLength + pageLength),
+        });
+    };
 
     private onClickFilm = (film: FilmInterface) => {
         this.setState({
@@ -179,14 +226,6 @@ class FilmScreenComponent extends React.Component<Props, State> {
     private handleAddFilm = () => {
         const { title, release_year, format, stars, image_link } = this.state;
         this.props.addFilm({ title, release_year: +release_year, format, stars, image_link});
-
-        this.setState({
-            title: '',
-            release_year: '',
-            format: '',
-            stars: '',
-            image_link: '',
-        });
     };
 
     private handleChangeInput = (value: string, key: string) => {

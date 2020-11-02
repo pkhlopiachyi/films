@@ -1,8 +1,8 @@
 .film-carousel {
   display: flex;
+  max-width: 880px;
+  flex-wrap: wrap;
   margin: 0 auto;
-  overflow-x: scroll;
-  overflow-y: hidden;
 
   &__item {
     display: flex;
@@ -77,8 +77,6 @@
 @media (max-width: 576px) {
   .film-carousel {
     flex-direction: column;
-    overflow-x: hidden;
-    overflow-y: scroll;
 
     &__item {
       width: 100%;

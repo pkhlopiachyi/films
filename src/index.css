@@ -115,9 +115,9 @@
       }
 .film-carousel {
   display: flex;
+  max-width: 880px;
+  flex-wrap: wrap;
   margin: 0 auto;
-  overflow-x: scroll;
-  overflow-y: hidden;
 }
 .film-carousel__item {
     display: flex;
@@ -177,8 +177,6 @@
 @media (max-width: 576px) {
   .film-carousel {
     flex-direction: column;
-    overflow-x: hidden;
-    overflow-y: scroll;
   }
 
     .film-carousel__item {
@@ -233,6 +231,40 @@
 .custom-input input[type=number] {
     -moz-appearance: textfield;
   }
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0;
+  margin: 0;
+  height: 44px;
+}
+.pagination .page-item {
+    margin: 0 2px;
+  }
+.pagination .page-item:first-child .page-link, .pagination .page-item:last-child .page-link {
+        color: #161616;
+        font-weight: bold;
+      }
+.pagination .page-item .page-link {
+      background-color: #ffffff !important;
+      color: var(--secondary-text-color);
+      border: none;
+      width: 20px;
+      height: 20px;
+      padding: unset;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0;
+    }
+.pagination .disabled .page-link {
+      color: rgba(22, 22, 22, 0.7) !important;
+    }
+.pagination .active .page-link {
+      color: #ff5500;
+    }
 .search-field {
   display: flex;
   flex-wrap: wrap;
@@ -370,6 +402,12 @@
       .film-upload .form-file-label {
         margin: 0;
       }
+}
+.pg-alerts {
+  position: fixed;
+  right: 10px;
+  top: 60px;
+  z-index: 100000;
 }
 .film-screen {
   min-height: 100vh;

@@ -26,7 +26,7 @@ const FilmCarouselComponent: React.FC<FilmCarouselProps> = ({ list, onSelectFilm
         <div className="film-carousel__empty">
             No data
         </div>
-    )
+    );
 
     return (
         <div className={`film-carousel ${list.length ? '' : 'no-data'}`}>
