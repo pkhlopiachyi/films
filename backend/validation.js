@@ -6,7 +6,7 @@ const createFilmValidation = data => {
         release_year: Joi.number().min(1895),
         format: Joi.string(),
         stars: Joi.string(),
-        image_link: Joi.string(),
+        image_link: Joi.string().optional().allow(''),
     });
 
     return schema.validate(data);
