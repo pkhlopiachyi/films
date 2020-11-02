@@ -32,4 +32,4 @@ npm test
 
 ## 5) Upload file
 
-test file exist in repository root folder test.txt
+test file exist in repository root folder (test.txt)
