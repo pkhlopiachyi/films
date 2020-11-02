@@ -5,3 +5,4 @@ export * from './FileCarousel';
 export * from './Input';
 export * from './SearchField';
 export * from './ShowFIlmDetailsModal';
+export * from './UploadFile';

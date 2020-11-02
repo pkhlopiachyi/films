@@ -1,0 +1,43 @@
+.film-upload {
+  background-color: #ffffff;
+  display: flex;
+
+  .form-file {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    &-label {
+      width: fit-content;
+      margin: 0 10px;
+      margin-bottom: 0;
+    }
+
+    .form-control-file {
+      width: fit-content;
+    }
+  }
+
+  .btn {
+    border-radius: 0;
+    color: #ff5500;
+    background: #ffffff;
+    border-color: #ced4da;
+  }
+}
+
+@media (max-width: 576px) {
+  .film-upload {
+    flex-direction: column;
+
+    .form-file {
+      padding-left: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+
+      &-label {
+        margin: 0;
+      }
+    }
+  }
+}

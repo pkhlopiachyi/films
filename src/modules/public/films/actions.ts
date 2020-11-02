@@ -12,13 +12,16 @@ import {
     SEARCH_FILM_DATA,
     SEARCH_FILM_ERROR,
     SEARCH_FILM_FETCH,
+    UPLOAD_FILM_LIST_DATA,
+    UPLOAD_FILM_LIST_ERROR,
+    UPLOAD_FILM_LIST_FETCH,
 } from './constants';
 
 export interface FilmListFetch {
     type: typeof FILM_LIST_FETCH;
     payload?: {
         isAlphabet: boolean;
-    }
+    };
 }
 
 export interface FilmListData {
@@ -53,7 +56,7 @@ export interface AddFilmError {
 }
 
 export interface DeleteFilmFetch {
-    type: typeof DELETE_FILM_FETCH,
+    type: typeof DELETE_FILM_FETCH;
     payload: {
         _id: string;
     };
@@ -74,7 +77,7 @@ export interface SearchFilmsFetch {
     payload: {
         value: string;
     };
-};
+}
 
 export interface SearchFilmsData {
     type: typeof SEARCH_FILM_DATA;
@@ -83,7 +86,22 @@ export interface SearchFilmsData {
 
 export interface SearchFilmFetchError {
     type: typeof SEARCH_FILM_ERROR;
-    payload: DeleteFilmError;
+    payload: CommonError;
+}
+
+export interface UploadFilmsListFetch {
+    type: typeof UPLOAD_FILM_LIST_FETCH;
+    payload: FormData;
+}
+
+export interface UploadFilmListData {
+    type: typeof UPLOAD_FILM_LIST_DATA;
+    payload: string;
+}
+
+export interface UploadFilmListError {
+    type: typeof UPLOAD_FILM_LIST_ERROR;
+    payload: CommonError;
 }
 
 export type FilmActions = FilmListFetch
@@ -97,7 +115,10 @@ export type FilmActions = FilmListFetch
     | DeleteFilmError
     | SearchFilmsFetch
     | SearchFilmsData
-    | SearchFilmFetchError;
+    | SearchFilmFetchError
+    | UploadFilmsListFetch
+    | UploadFilmListData
+    | UploadFilmListError;
 
 export const fetchFilmList = (payload?: FilmListFetch['payload']): FilmListFetch => ({
     type: FILM_LIST_FETCH,
@@ -156,5 +177,20 @@ export const searchFilmData = (payload: SearchFilmsData['payload']): SearchFilms
 
 export const searchFilmError = (payload: SearchFilmFetchError['payload']): SearchFilmFetchError => ({
     type: SEARCH_FILM_ERROR,
+    payload,
+});
+
+export const fetchUploadFilmsList = (payload: UploadFilmsListFetch['payload']): UploadFilmsListFetch => ({
+    type: UPLOAD_FILM_LIST_FETCH,
+    payload,
+});
+
+export const uploadFilmListData = (payload: UploadFilmListData['payload']): UploadFilmListData => ({
+    type: UPLOAD_FILM_LIST_DATA,
+    payload,
+});
+
+export const uploadFilmListError = (payload: UploadFilmListError['payload']): UploadFilmListError => ({
+    type: UPLOAD_FILM_LIST_ERROR,
     payload,
 });

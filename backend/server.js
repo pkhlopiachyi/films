@@ -3,7 +3,7 @@ const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const formidable = require('express-formidable');
 const filmRoute = require('./routes/film');
 
 dotenv.config();
@@ -18,6 +18,7 @@ const port = process.env.port || 5000;
 
 app.use(cors());
 app.use(express.json());
+app.use(formidable());
 
 app.use('/api/film', filmRoute);
 

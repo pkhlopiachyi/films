@@ -13,6 +13,9 @@ import {
     SEARCH_FILM_DATA,
     SEARCH_FILM_ERROR,
     SEARCH_FILM_FETCH,
+    UPLOAD_FILM_LIST_DATA,
+    UPLOAD_FILM_LIST_ERROR,
+    UPLOAD_FILM_LIST_FETCH,
 } from './constants';
 
 export interface FilmState {
@@ -21,13 +24,15 @@ export interface FilmState {
     error?: CommonError;
     addFilmSuccess: boolean;
     deleteFilmSuccess: boolean;
+    uploadFilmsSuccess: boolean;
 }
 
-const defaultFilmState: FilmState = {
+export const defaultFilmState: FilmState = {
     loading: false,
     films: [],
     addFilmSuccess: false,
     deleteFilmSuccess: false,
+    uploadFilmsSuccess: false,
 };
 
 export const filmReducer = (state = defaultFilmState, action: FilmActions) => {
@@ -107,7 +112,25 @@ export const filmReducer = (state = defaultFilmState, action: FilmActions) => {
                 loading: false,
                 error: action.payload,
             };
+        case UPLOAD_FILM_LIST_FETCH:
+            return {
+                ...state,
+                loading: true,
+                uploadFilmsSuccess: false,
+            };
+        case UPLOAD_FILM_LIST_DATA:
+            return {
+                ...state,
+                loading: false,
+                uploadFilmsSuccess: true,
+            };
+        case UPLOAD_FILM_LIST_ERROR:
+            return {
+                ...state,
+                loading: false,
+                uploadFilmsSuccess: false,
+            };
         default:
             return state;
     }
-}
+};

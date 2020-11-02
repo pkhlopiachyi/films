@@ -5,13 +5,14 @@ import {
     MapStateToProps,
 } from 'react-redux';
 import { compose } from 'redux';
-import { DeleteFilmModal, FilmCarousel, FilmDetailsModal, SearchField } from '../../components';
+import { DeleteFilmModal, FilmCarousel, FilmDetailsModal, SearchField, UploadFile } from '../../components';
 import { AddEmainModal } from '../../components/AddFilmForm';
 import {
     addFilm,
     CommonError,
     deleteFilm,
     fetchFilmList,
+    fetchUploadFilmsList,
     FilmInterface,
     RootState,
     searchFilm,
@@ -35,6 +36,7 @@ interface DispatchProps {
     deleteFilm: typeof deleteFilm;
     fetchFilmList: typeof fetchFilmList;
     searchFilm: typeof searchFilm;
+    upload: typeof fetchUploadFilmsList;
 }
 
 type Props = ReduxProps & DispatchProps;
@@ -50,6 +52,7 @@ interface State {
     stars: string;
     image_link: string;
     searchValue: string;
+    file: File[];
 }
 
 class FilmScreenComponent extends React.Component<Props, State> {
@@ -67,6 +70,7 @@ class FilmScreenComponent extends React.Component<Props, State> {
             stars: '',
             image_link: '',
             searchValue: '',
+            file: [],
         };
     }
     public componentDidMount() {
@@ -108,6 +112,7 @@ class FilmScreenComponent extends React.Component<Props, State> {
                             search={this.handleSearch}
                             getList={this.handleFetchFilms}
                         />
+                        <UploadFile handleUploadFile={this.handleUploadFile} upload={this.uploadFile}/>
                     </div>
                     <FilmCarousel
                         list={this.props.films}
@@ -168,7 +173,7 @@ class FilmScreenComponent extends React.Component<Props, State> {
     };
 
     private toggleAddFilmModal = () => {
-        this.setState({ showAddFilmModal: !this.state.showDetailsModal });
+        this.setState({ showAddFilmModal: !this.state.showAddFilmModal });
     };
 
     private handleAddFilm = () => {
@@ -198,6 +203,20 @@ class FilmScreenComponent extends React.Component<Props, State> {
     private handleFetchFilms = (isAlphabet: boolean) => {
         this.props.fetchFilmList({ isAlphabet });
     };
+
+    // tslint:disable:no-any
+    private handleUploadFile = (e: any) => {
+
+        this.setState(({ file: e.target.files }));
+    };
+
+    private uploadFile = () => {
+        const request = new FormData();
+
+        request.append('films_file', this.state.file[0]);
+
+        this.props.upload(request);
+    };
 }
 
 const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
@@ -213,6 +232,7 @@ const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch
     deleteFilm: payload => dispatch(deleteFilm(payload)),
     fetchFilmList: paylaod => dispatch(fetchFilmList(paylaod)),
     searchFilm: payload => dispatch(searchFilm(payload)),
+    upload: payload => dispatch(fetchUploadFilmsList(payload)),
 });
 
 export const FilmScreen = compose(connect(mapStateToProps, mapDispatchProps))(FilmScreenComponent) as React.ComponentType;

@@ -30,8 +30,6 @@
     "tslint": "^5.13.1"
   },
   "scripts": {
-    "lint": "yarn style:lint && tsc --noEmit && tslint --project .",
-    "style:lint": "npx stylelint '**/*.pcss'",
     "build:css": "postcss src/index.pcss -o src/index.css",
     "watch:css": "postcss src/index.pcss -o src/index.css -w",
     "start": "npm-run-all -p watch:css start-js",

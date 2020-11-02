@@ -30,7 +30,7 @@ export class AddEmainModal extends React.Component<Props> {
         } = this.props;
 
         return (
-            <div className="add-new-film" onClick={onCancel}>
+            <div className="add-new-film">
                 <div className="add-new-film__form">
                     <div className="add-new-film__form__header">Add New movie</div>
                     <div className="add-new-film__form__body">

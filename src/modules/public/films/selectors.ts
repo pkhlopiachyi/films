@@ -15,3 +15,6 @@ export const selectAddFilmSuccess = (state: RootState): FilmState['addFilmSucces
 
 export const selectDeleteFilmSuccess = (state: RootState): FilmState['deleteFilmSuccess'] =>
     state.public.film.deleteFilmSuccess;
+
+export const selcetUploadFilmsSuccess = (state: RootState): FilmState['uploadFilmsSuccess'] =>
+    state.public.film.uploadFilmsSuccess;
