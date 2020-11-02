@@ -3,7 +3,6 @@ const app = express();
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const formidable = require('express-formidable');
 const filmRoute = require('./routes/film');
 
 dotenv.config();
