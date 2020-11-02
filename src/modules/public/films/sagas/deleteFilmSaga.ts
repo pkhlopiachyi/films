@@ -10,7 +10,7 @@ const filmConfig: RequestOptions = {
 export function* deleteFilmSaga(action: DeleteFilmFetch) {
     try {
         const query = buildQueryString(action.payload);
-        const { data } = yield call(API.delete(filmConfig), `/delete?${query}`)
+        const { data } = yield call(API.delete(filmConfig), `/delete?${query}`);
         yield put(deleteFilmData(data));
 
     } catch (error) {
