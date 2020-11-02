@@ -22,9 +22,15 @@ const FilmCarouselComponent: React.FC<FilmCarouselProps> = ({ list, onSelectFilm
         </div>
     );
 
+    const renderNoData = () => (
+        <div className="film-carousel__empty">
+            No data
+        </div>
+    )
+
     return (
-        <div className="film-carousel">
-            {list.map(renderItem)}
+        <div className={`film-carousel ${list.length ? '' : 'no-data'}`}>
+            {list.length ? list.map(renderItem) : renderNoData()}
         </div>
     );
 };

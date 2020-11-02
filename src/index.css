@@ -164,6 +164,16 @@
         display: flex;
         transform: scale(0.7);
       }
+.film-carousel__empty {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+.no-data {
+  overflow: hidden
+}
 @media (max-width: 576px) {
   .film-carousel {
     flex-direction: column;
