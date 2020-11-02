@@ -18,7 +18,6 @@ const port = process.env.port || 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use(formidable());
 
 app.use('/api/film', filmRoute);
 
