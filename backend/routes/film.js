@@ -1,9 +1,8 @@
 const router = require('express').Router();
 const fs = require('fs');
 const Film = require('../models/Film');
-const { createFilmValidation } = require('../validation');
+const { createFilmValidation, duplicationCheck } = require('../validation');
 const formidable = require('formidable');
-const { duplicationCheck } = require('../actorsDuplicatingCheck');
 
 router.get('/', async (req, res) => {
     try {
@@ -16,7 +15,6 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-
     try {
         const { error } = createFilmValidation(req.body);
 
