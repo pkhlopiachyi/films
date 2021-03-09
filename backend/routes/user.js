@@ -4,7 +4,7 @@ const { createUserValidation } = require('../validation');
 
 router.post('/login', async (req, res) => {
     try {
-        const { email, password } = req;
+        const { email, password } = req.body;
 
         if (!email) {
             return res.status(400).send({ error: 'Email is missing' });
@@ -25,7 +25,6 @@ router.post('/login', async (req, res) => {
         }
 
         return res.status(200).send({ data: user });
-
     } catch (error) {
         res.status(400).send(error);
     }
@@ -43,8 +42,10 @@ router.post('/register', async (req, res) => {
 
         await User.collection.insertOne(user);
 
-        return res.status(200).send({ login: 'success' });
+        return res.status(200).send({ status: 'success' });
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).send({error});
     }
 });
+
+module.exports = router;

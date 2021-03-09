@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 5,
         max: 255
+    },
+    favorite: {
+        type: [String],
+        default: []
     }
 })
 

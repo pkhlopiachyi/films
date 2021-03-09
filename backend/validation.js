@@ -14,10 +14,12 @@ const createFilmValidation = data => {
 }
 
 const createUserValidation = data => {
+    console.log(GENDERS);
+
     const schema = Joi.object({
         username: Joi.string().min(4).max(255),
         email: Joi.string().email().min(4).max(255),
-        gender: Joi.options(GENDERS),
+        gender: Joi.string().valid(GENDERS[0], GENDERS[1]),
         birthday: Joi.date(),
         password: Joi.string().min(5).max(255)
     });

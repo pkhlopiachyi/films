@@ -1,1 +1,5 @@
-export const GENDERS = [ 'male', 'female' ];
+const GENDERS = [ 'male', 'female' ];
+
+module.exports = {
+    GENDERS
+}

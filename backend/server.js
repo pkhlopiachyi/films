@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const filmRoute = require('./routes/film');
+const userRoute = require('./routes/user');
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ const port = process.env.port || 5000;
 app.use(cors());
 app.use(express.json());
 
-app.use('/api/profile')
+app.use('/api/user', userRoute);
 app.use('/api/film', filmRoute);
 
 
