@@ -11,3 +11,12 @@ export interface FilmInterface {
     stars: string;
     image_link: string;
 }
+
+export interface UserInterface {
+    _id: number;
+    email: string;
+    username: string;
+    favorite: FilmInterface[];
+    birthday: number;
+    gender: 'male' | 'female';
+}
