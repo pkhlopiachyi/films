@@ -1,10 +1,13 @@
 import React from 'react';
 import { Spinner } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect, MapStateToProps } from 'react-redux';
 import { Route, Switch } from 'react-router';
 import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import { RootState, UserInterface } from '../modules';
+import { selectUserData } from '../modules/public/login/selectors';
 import { FilmScreen } from '../screens';
+import { LoginScreen } from '../screens/LoginScreen';
 
 
 const renderLoader = () => (
@@ -13,12 +16,14 @@ const renderLoader = () => (
     </div>
 );
 
-const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
+const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent, loading, userData, ...rest }) => {
     if (loading) {
         return renderLoader();
     }
 
-    if (isLogged && rest.path !== '/setup') {
+    window.console.log(userData);
+
+    if (userData) {
         return <Route {...rest}><Redirect to={'/films'} /></Route>;
     }
 
@@ -27,13 +32,13 @@ const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent,
     return <Route {...rest} render={renderCustomerComponent} />;
 };
 
-const PrivateRoute: React.FunctionComponent<any> = ({ component: CustomComponent, loading, isLogged, ...rest }) => {
+const PrivateRoute: React.FunctionComponent<any> = ({ component: CustomComponent, loading, userData, ...rest }) => {
     if (loading) {
         return renderLoader();
     }
     const renderCustomerComponent = (props: JSX.IntrinsicAttributes) => <CustomComponent {...props} />;
 
-    if (isLogged) {
+    if (!userData) {
         return <Route {...rest} render={renderCustomerComponent} />;
     }
 
@@ -44,14 +49,22 @@ const PrivateRoute: React.FunctionComponent<any> = ({ component: CustomComponent
     );
 };
 
-class LayoutComponent extends React.Component {
+interface ReduxProps {
+    userData?: UserInterface;
+}
+
+type Props = ReduxProps;
+
+class LayoutComponent extends React.Component<Props> {
     public render() {
+        const { userData } = this.props;
+
         return (
             <div>
                 <Switch>
-                    <PublicRoute path="/login" />
-                    <PublicRoute path="/register" />
-                    <PrivateRoute path="/profile" />
+                    <PublicRoute path="/login" userData={userData}  component={LoginScreen} />
+                    <PublicRoute path="/register" userData={userData} />
+                    <PrivateRoute path="/profile" userData={userData} />
                     <Route path="/films" component={FilmScreen} />
                 </Switch>
             </div>
@@ -59,7 +72,11 @@ class LayoutComponent extends React.Component {
     }
 }
 
+const mapStateToProps: MapStateToProps<ReduxProps, {}, RootState> = state => ({
+    userData: selectUserData(state),
+});
+
 export const Layout = compose(
     withRouter,
-    connect(),
-)(LayoutComponent);
+    connect(mapStateToProps),
+)(LayoutComponent) as React.ComponentClass;

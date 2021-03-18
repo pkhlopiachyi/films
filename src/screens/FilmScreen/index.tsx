@@ -79,6 +79,7 @@ class FilmScreenComponent extends React.Component<Props, State> {
             paginatedList: [],
         };
     }
+
     public componentDidMount() {
         this.handleFetchFilms(false);
     }

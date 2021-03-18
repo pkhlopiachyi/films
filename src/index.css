@@ -412,8 +412,8 @@
 .film-screen {
   min-height: 100vh;
   display: flex;
-  align-items: center;
   background-color: #ff5500;
+  padding-top: 10px;
 }
 .film-screen__content {
     width: 100%;

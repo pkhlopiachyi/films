@@ -9,20 +9,12 @@ import {
 
 export interface UserState {
     loading: boolean;
-    userData: UserInterface;
+    userData?: UserInterface;
     error?: CommonError;
 }
 
 export const defaultUserState: UserState = {
     loading: false,
-    userData: {
-        _id: 0,
-        email: '',
-        username: '',
-        favorite: [],
-        birthday: 0,
-        gender: 'male',
-    },
 };
 
 export const userReducer = (state = defaultUserState, action: UserActions) => {

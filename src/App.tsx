@@ -1,12 +1,18 @@
+import { createBrowserHistory } from 'history';
 import * as React from 'react';
+import { Router } from 'react-router';
 import { Alerts } from './containers';
-import { FilmScreen } from './screens';
+import { Layout } from './routes';
+
+const history = createBrowserHistory();
 
 class AppLayout extends React.Component {
     public render() {
         return (
             <React.Fragment>
-                <FilmScreen />
+                <Router history={history}>
+                    <Layout />
+                </Router>
                 <Alerts />
             </React.Fragment>
         );
