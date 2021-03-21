@@ -2,7 +2,7 @@ import { Config } from './types';
 
 export const defaultConfig: Config = {
     api: {
-        url: 'http://localhost:5000/api/film',
+        url: 'http://localhost:5000/api/',
     },
     msAlertDisplayTime: '5000',
 };

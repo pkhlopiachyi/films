@@ -6,3 +6,5 @@ export const paginationMaxLenght = 5;
 export const paginationOuterElems = 3;
 
 export const pageLength = 8;
+
+export const GENDERS = [ 'male', 'female' ];

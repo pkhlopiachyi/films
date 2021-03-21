@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { connect, MapDispatchToPropsFunction, MapStateToProps } from 'react-redux';
 import { Input } from '../../components';
+import { login, RootState } from '../../modules';
 
 interface State {
     email: string;
@@ -10,7 +10,7 @@ interface State {
 }
 
 interface DispatchProps {
-
+    login: typeof login;
 }
 
 type Props = DispatchProps;
@@ -29,17 +29,17 @@ class LoginScreenComponent extends React.Component<Props, State> {
         const { email, password } = this.state;
 
         return (
-            <div className="loginScreen">
-                <div className="loginScreen__form">
-                    <header className="loginScreen__form__header">
+            <div className="authScreen">
+                <div className="authScreen__form">
+                    <header className="authScreen__form__header">
                         LOGIN
                     </header>
-                    <div className="loginScreen__form__body">
+                    <div className="authScreen__form__body">
                         <Input
                             type="text"
                             label="Email"
                             placeholder="Enter your email"
-                            classNameInput="loginScreen__form__input"
+                            classNameInput="authScreen__form__body__input"
                             autoFocus={true}
                             inputValue={email}
                             handleChangeInput={value => this.handleChangeInput(value, 'email')}
@@ -48,17 +48,18 @@ class LoginScreenComponent extends React.Component<Props, State> {
                             type="password"
                             label="Password"
                             placeholder="Enter your password"
-                            classNameInput="loginScreen__form__input"
+                            classNameInput="authScreen__form__body__input"
                             autoFocus={true}
                             inputValue={password}
                             handleChangeInput={value => this.handleChangeInput(value, 'password')}
                         />
                     </div>
-                    <footer className="loginScreen__form__footer">
+                    <footer className="authScreen__form__footer">
                         <Button
-                            size="lg"
+                            block
                             type="button"
                             disabled={!email.length || !password.length}
+                            onClick={this.handleLogin}
                         >
                             Login
                         </Button>
@@ -68,6 +69,12 @@ class LoginScreenComponent extends React.Component<Props, State> {
         );
     }
 
+    private handleLogin = () => {
+        const { email, password } = this.state;
+
+        this.props.login({ email, password });
+    };
+
     private handleChangeInput = (value: string, key: string) => {
         //@ts-ignore
         this.setState({
@@ -76,4 +83,11 @@ class LoginScreenComponent extends React.Component<Props, State> {
     };
 }
 
-export const LoginScreen = compose(connect())(LoginScreenComponent);
+const mapStateToProps: MapStateToProps<{}, {}, RootState> = state => ({});
+
+
+const mapDispatchProps: MapDispatchToPropsFunction<DispatchProps, {}> = dispatch => ({
+    login: payload => dispatch(login(payload)),
+});
+
+export const LoginScreen = connect(mapStateToProps, mapDispatchProps)(LoginScreenComponent);

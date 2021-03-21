@@ -39,10 +39,9 @@ export class Input extends React.Component<InputProps> {
         return (
             <React.Fragment>
                 <div className="custom-input">
-                    {inputValue &&
                     <label className={classNameLabel}>
                         {label}
-                    </label>}
+                    </label>
                     <InputGroup size="lg">
                         <FormControl
                             size="lg"

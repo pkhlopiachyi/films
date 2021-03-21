@@ -9,7 +9,7 @@ const filmConfig: RequestOptions = {
 
 export function* addFilmSaga(action: AddFilmFetch) {
     try {
-        const { data } = yield call(API.post(filmConfig), '/add', action.payload);
+        const { data } = yield call(API.post(filmConfig), '/film/add', action.payload);
         yield put(addFilmData(data));
         yield put(alertPush({ message: ['Film was added successfully'], type: 'success' }));
     } catch (error) {

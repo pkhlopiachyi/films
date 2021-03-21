@@ -20,3 +20,7 @@ export interface UserInterface {
     birthday: number;
     gender: 'male' | 'female';
 }
+
+export interface RequestResponce {
+    success: boolean;
+}

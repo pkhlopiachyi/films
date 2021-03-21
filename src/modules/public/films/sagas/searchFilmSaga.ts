@@ -11,7 +11,7 @@ const filmConfig: RequestOptions = {
 export function* searchFilmSaga(action: SearchFilmsFetch) {
     try {
         const query = buildQueryString(action.payload);
-        const { data } = yield call(API.get(filmConfig), `/search?${query}`);
+        const { data } = yield call(API.get(filmConfig), `/film/search?${query}`);
 
         yield put(searchFilmData(data));
     } catch (error) {

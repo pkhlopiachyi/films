@@ -9,8 +9,14 @@ const filmConfig: RequestOptions = {
 
 export function* fetchFilmsSaga(action: FilmListFetch) {
     try {
-        const list = action.payload && action.payload.isAlphabet ?
-            yield call(API.get(filmConfig), '/alphabet') : yield call(API.get(filmConfig), '/');
+        let list = [];
+
+        // tslint:disable-next-line:prefer-conditional-expression
+        if (action.payload && action.payload.isAlphabet){
+            list = yield call(API.get(filmConfig), '/film/alphabet');
+        } else {
+            list = yield call(API.get(filmConfig), '/film');
+        }
 
         yield put(filmListData(list.data));
     } catch (error) {

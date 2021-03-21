@@ -15,6 +15,8 @@ export interface UserState {
 
 export const defaultUserState: UserState = {
     loading: false,
+    userData: undefined,
+    error: undefined,
 };
 
 export const userReducer = (state = defaultUserState, action: UserActions) => {

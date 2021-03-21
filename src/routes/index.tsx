@@ -6,8 +6,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { RootState, UserInterface } from '../modules';
 import { selectUserData } from '../modules/public/login/selectors';
-import { FilmScreen } from '../screens';
-import { LoginScreen } from '../screens/LoginScreen';
+import { FilmScreen, LoginScreen , RegisterScreen } from '../screens';
 
 
 const renderLoader = () => (
@@ -60,10 +59,10 @@ class LayoutComponent extends React.Component<Props> {
         const { userData } = this.props;
 
         return (
-            <div>
+            <div className="layout">
                 <Switch>
                     <PublicRoute path="/login" userData={userData}  component={LoginScreen} />
-                    <PublicRoute path="/register" userData={userData} />
+                    <PublicRoute path="/register" userData={userData} component={RegisterScreen} />
                     <PrivateRoute path="/profile" userData={userData} />
                     <Route path="/films" component={FilmScreen} />
                 </Switch>

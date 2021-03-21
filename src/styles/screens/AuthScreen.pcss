@@ -1,0 +1,40 @@
+.authScreen {
+  width: 100wh;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__form {
+    width: 400px;
+    background: #ffffff;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    }
+
+    &__body {
+      padding: 0 10px;
+      margin-top: 30px;
+
+      .custom-input {
+        margin-bottom: 30px;
+      }
+
+      label {
+        left: 0;
+        top: -25px;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      padding: 0 10px;
+      margin-bottom: 20px;
+    }
+  }
+}

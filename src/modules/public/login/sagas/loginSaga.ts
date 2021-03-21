@@ -9,7 +9,7 @@ const loginConfig: RequestOptions = {
 
 export function* loginSaga(action: LoginRequest) {
     try {
-        const { data } = yield call(API.post(loginConfig), 'login', action.payload);
+        const { data } = yield call(API.post(loginConfig), '/user/login', action.payload);
         yield put(userData(data));
     } catch (error) {
         yield put(alertPush({ message: error.message, type: 'error' }));
