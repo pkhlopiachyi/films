@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { Input } from '../../components';
-// import { GENDERS } from '../../constants';
+import { CustomDropdown, Input } from '../../components';
+import { genders } from '../../constants';
 import { register } from '../../modules/public/register';
 
 export const RegisterScreen = () => {
@@ -54,6 +54,12 @@ export const RegisterScreen = () => {
                         classNameInput="authScreen__form__body__input"
                         inputValue={username}
                         handleChangeInput={setUsername}
+                    />
+                    <CustomDropdown
+                        list={genders}
+                        placeholder="Select your gender"
+                        onSelect={setGender}
+                        label={'Gender'}
                     />
                 </div>
                 <footer className="authScreen__form__footer">

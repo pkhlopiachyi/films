@@ -99,6 +99,11 @@
   position: relative;
   margin-bottom: 20px;
 }
+.cr-dropdown label {
+    position: absolute;
+    font-size: 14px;
+    padding: 0 5px;
+  }
 .cr-dropdown .dropdown {
     width: 100%;
   }
@@ -110,6 +115,7 @@
       text-align: left;
       width: 100%;
       box-shadow: none !important;
+      font-size: 14px;
     }
 .cr-dropdown .dropdown-toggle:focus,
       .cr-dropdown .dropdown-toggle:hover,
@@ -124,6 +130,7 @@
 .cr-dropdown .dropdown-item {
       padding-bottom: 10px;
       padding-top: 10px;
+      text-transform: capitalize;
     }
 .cr-dropdown .dropdown-item:hover,
       .cr-dropdown .dropdown-item:focus {
@@ -136,6 +143,10 @@
   -webkit-flex-wrap: wrap;
           flex-wrap: wrap;
   margin: 0 auto;
+  background: #ffffff;
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 0 10px;
 }
 .film-carousel__item {
     display: -webkit-flex;
@@ -153,6 +164,9 @@
     margin-right: 20px;
     transition: .4s;
   }
+.film-carousel__item:nth-child(4n) {
+      margin-right: 0;
+    }
 .film-carousel__item__delete {
       background-color: #000000;
       position: absolute;
@@ -179,7 +193,6 @@
       height: 40px;
       text-align: center;
       font-size: 20px;
-      color: #ffffff;
     }
 .film-carousel__item:hover {
       -webkit-transform: scale(1.1);
@@ -258,6 +271,42 @@
 .custom-input input[type=number] {
     -moz-appearance: textfield;
   }
+.menuBar {
+  width: 100%;
+  height: 60px;
+  border-radius: 0 0 10px 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000000;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+}
+.menuBar__links {
+    display: -webkit-flex;
+    display: flex;
+  }
+.menuBar__item {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+            align-items: center;
+    -webkit-justify-content: center;
+            justify-content: center;
+    width: 150px;
+    color: #ffffff;
+    cursor: pointer;
+    text-decoration: none;
+  }
+.menuBar__item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      text-decoration: none;
+      color: #ffffff;
+    }
 .pagination {
   display: -webkit-flex;
   display: flex;
@@ -539,6 +588,7 @@
     }
 .layout {
   background-color: #ff5500;
+  padding-top: 60px;
 }
 body {
   font-family:

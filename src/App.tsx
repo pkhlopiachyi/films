@@ -1,6 +1,7 @@
 import { createBrowserHistory } from 'history';
 import * as React from 'react';
 import { Router } from 'react-router';
+import { Menu } from './components';
 import { Alerts } from './containers';
 import { Layout } from './routes';
 
@@ -11,6 +12,7 @@ class AppLayout extends React.Component {
         return (
             <React.Fragment>
                 <Router history={history}>
+                    <Menu />
                     <Layout />
                 </Router>
                 <Alerts />

@@ -3,6 +3,7 @@ export * from './DeleteFilmModal';
 export * from './Dropdown';
 export * from './FileCarousel';
 export * from './Input';
+export * from './MenuBar';
 export * from './SearchField';
 export * from './ShowFIlmDetailsModal';
 export * from './UploadFile';

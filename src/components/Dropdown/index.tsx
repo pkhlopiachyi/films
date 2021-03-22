@@ -8,6 +8,7 @@ export interface DropdownComponentProps {
     className?: string;
     placeholder?: string;
     disableContentEditable?: boolean;
+    label?: string;
 }
 
 interface DropdownComponentState {
@@ -36,11 +37,12 @@ export class CustomDropdown extends React.Component<DropdownComponentProps & {},
 
     public render() {
         const { selected } = this.state;
-        const { list } = this.props;
+        const { list, label } = this.props;
         const cx = classnames('cr-dropdown', this.props.className);
 
         return (
             <div className={cx}>
+                <label>{label}</label>
                 <Dropdown>
                     <Dropdown.Toggle variant="primary" id="dropdown-basic">
                         {selected}

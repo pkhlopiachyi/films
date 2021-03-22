@@ -24,3 +24,8 @@ export interface UserInterface {
 export interface RequestResponce {
     success: boolean;
 }
+
+export interface MenuInterface {
+    path: string;
+    label: string;
+}

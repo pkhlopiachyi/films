@@ -65,6 +65,7 @@ class LayoutComponent extends React.Component<Props> {
                     <PublicRoute path="/register" userData={userData} component={RegisterScreen} />
                     <PrivateRoute path="/profile" userData={userData} />
                     <Route path="/films" component={FilmScreen} />
+                    <Route path="**"><Redirect to="/films" /></Route>
                 </Switch>
             </div>
         );
