@@ -1,16 +1,19 @@
+import moment from 'moment';
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
 import { useDispatch } from 'react-redux';
 import { CustomDropdown, Input } from '../../components';
+import { CustomDatePicker } from '../../components/DatePicker';
 import { genders } from '../../constants';
-import { register } from '../../modules/public/register';
+import { register } from '../../modules';
 
 export const RegisterScreen = () => {
     const dispath = useDispatch();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword] = useState('');
     const [ username, setUsername ] = useState('');
-    const [ birthday, setBirthday ] = useState(0);
+    const [ birthday, setBirthday ] = useState(moment(new Date()).format('DD.MM.YYYY'));
     const [ gender, setGender ] = useState('');
 
     const handleRegister = () => {
@@ -21,6 +24,10 @@ export const RegisterScreen = () => {
             birthday,
             gender,
         }));
+    };
+
+    const changeDate = (date: Date) => {
+        setBirthday(moment(date).format('DD.MM.YYYY'));
     };
 
     return (
@@ -60,6 +67,11 @@ export const RegisterScreen = () => {
                         placeholder="Select your gender"
                         onSelect={setGender}
                         label={'Gender'}
+                    />
+                    <CustomDatePicker
+                        value={birthday}
+                        changeDate={changeDate}
+                        placeholder="Select your birthday"
                     />
                 </div>
                 <footer className="authScreen__form__footer">

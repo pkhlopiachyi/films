@@ -7,3 +7,4 @@ export * from './MenuBar';
 export * from './SearchField';
 export * from './ShowFIlmDetailsModal';
 export * from './UploadFile';
+export * from './DatePicker';

@@ -20,8 +20,6 @@ const PublicRoute: React.FunctionComponent<any> = ({ component: CustomComponent,
         return renderLoader();
     }
 
-    window.console.log(userData);
-
     if (userData) {
         return <Route {...rest}><Redirect to={'/films'} /></Route>;
     }

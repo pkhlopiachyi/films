@@ -9,6 +9,7 @@ import { RegisterState, rootRegisterSaga } from './public/register';
 export * from './public/alert';
 export * from './public/films';
 export * from './public/login';
+export * from './public/register';
 export * from './types';
 
 
