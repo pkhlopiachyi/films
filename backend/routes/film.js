@@ -3,6 +3,7 @@ const fs = require('fs');
 const Film = require('../models/Film');
 const { createFilmValidation, duplicationCheck } = require('../validation');
 const formidable = require('formidable');
+const socketWrapper = require('../sockets/socketIo');
 
 router.get('/', async (req, res) => {
     try {
@@ -36,6 +37,8 @@ router.post('/add', async (req, res) => {
 
         await Film.collection.insertOne(film);
 
+        socketWrapper.sendEvent('add film', film);
+
         res.status(200).send({ data: film });
     } catch (error) {
         res.status(400).send(error);
@@ -54,6 +57,8 @@ router.delete('/delete', async (req, res) => {
         }
 
         await Film.collection.deleteOne({ _id: film._id });
+
+        socketWrapper.sendEvent('delete film', film);
 
         res.status(200).send({ data: film });
     } catch (error) {

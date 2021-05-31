@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const filmRoute = require('./routes/film');
 const userRoute = require('./routes/user');
+const socketWrapper = require('./sockets/socketIo');
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/user', userRoute);
 app.use('/api/film', filmRoute);
 
+socketWrapper.init();
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
