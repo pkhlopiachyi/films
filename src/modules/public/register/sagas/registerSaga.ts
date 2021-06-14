@@ -9,7 +9,7 @@ const registerConfig: RequestOptions = {
 
 export function* registerSaga(action: RegisterRequest) {
     try {
-        const { data } = yield call(API.post(registerConfig), '/user/login', action.payload);
+        const { data } = yield call(API.post(registerConfig), '/user/register', action.payload);
         yield put(registerResponce(data));
         yield put(alertPush({ message: ['You has been register successfully!'], type: 'success'}));
     } catch (error) {
